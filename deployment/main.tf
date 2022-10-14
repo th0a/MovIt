@@ -22,7 +22,7 @@ resource "aws_ecs_cluster" "taskMovIt_cluster" {
 
 # adopt the default role created by AWS to run the task under
 data "aws_iam_role" "ecs_task_execution_role" {
-  name = "ecsInstanceRole"
+  name = "ecsTaskExecutionRole"
 }
 
 # define a task for the frontend webserver
