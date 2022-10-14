@@ -38,7 +38,7 @@ resource "aws_ecs_task_definition" "taskMovIt_frontend_webserver" {
   container_definitions = jsonencode([
     {
       name      = "frontend_webserver"
-      image     = "025429118793.dkr.ecr.us-east-1.amazonaws.com/frontend_webserver"
+      image     = "025429118793.dkr.ecr.us-east-1.amazonaws.com/movit:latest"
       essential = true
       command   = ["nginx", "-g", "daemon off;"]
       portMappings = [
