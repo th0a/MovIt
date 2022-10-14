@@ -47,6 +47,6 @@ jobs:
           ECR_REGISTRY: ${{ steps.ecr-login.outputs.registry }}
           ECR_REPOSITORY:  movit #frontend_webserver
         run: |
-          docker import frontend_webserver_docker_image.tar/frontend_webserver_docker_image.tar frontend_webserver
-          docker tag frontend_webserver 025429118793.dkr.ecr.us-east-1.amazonaws.com/frontend_webserver
+          docker import frontend_webserver_docker_image.tar/frontend_webserver_docker_image.tar movit
+          docker tag frontend_webserver 025429118793.dkr.ecr.us-east-1.amazonaws.com/movit
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
