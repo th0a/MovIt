@@ -120,7 +120,7 @@ resource "aws_lb_listener" "frontend" {
   load_balancer_arn = aws_lb.taskMovIt_load_balancer.arn
   port              = "443"
   protocol          = "HTTPS"
-
+  certificate_arn   = "arn:aws:acm:us-east-1:025429118793:certificate/a0ab9530-e388-4636-bf5c-bd29059b1128"
   default_action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.taskMovIt_target_group.arn
