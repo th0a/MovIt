@@ -57,8 +57,8 @@ resource "aws_ecs_task_definition" "taskMovIt_frontend_webserver" {
 resource "aws_security_group" "taskMovIt_security_group" {
   name = "taskMovIt_security_group"
   ingress {
-    from_port   = 80
-    to_port     = 80
+    from_port   = 443
+    to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
     ipv6_cidr_blocks = ["::/0"]
@@ -118,8 +118,8 @@ resource "aws_lb_target_group" "taskMovIt_target_group" {
 # load balancer endpoint
 resource "aws_lb_listener" "frontend" {
   load_balancer_arn = aws_lb.taskMovIt_load_balancer.arn
-  port              = "80"
-  protocol          = "HTTP"
+  port              = "443"
+  protocol          = "HTTPS"
 
   default_action {
     type             = "forward"
