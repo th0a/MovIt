@@ -56,7 +56,6 @@ app.get('/movieList', (req, res) => {
  //res.send('movieList will go here')
  //fetch movies from database
  //return to user as json 
- 
  const sql = "select * from movies"
  const params = []
  db.all(sql, params, (err, rows) => {
@@ -79,9 +78,11 @@ app.get('/movieList', (req, res) => {
 //Get watchlist for user
 //app.get('/watchlist/{user}', (req, res) => {
 app.get('/watchList/:user_id', (req, res) => {
+
   // fetch movies from database for {user}
   // return to user as json
-  var sql = "select * from watchList where user_id = ?"
+  //var sql = "select * from watchList where user_id = ?"
+  var sql = "select * from movies where movie_id in ( select movie_id from watchList where user_id = ? )"
   var params = [req.params.user_id]
   db.all(sql, params, (err, rows) => {
     if (err) {
@@ -95,6 +96,8 @@ app.get('/watchList/:user_id', (req, res) => {
   });
 });
 
+
+//select * from movies where movies.movie_id = newArray
 //end of get watchlist for user
 
 
