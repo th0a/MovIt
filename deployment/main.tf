@@ -51,6 +51,34 @@ resource "aws_ecs_task_definition" "taskMovIt_frontend_webserver" {
   ])
 }
 
+
+# define a task for the backend
+resource "aws_ecs_task_definition" "taskMovIt_backend_webserver" {
+  family                   = "taskMovIt_backend_webserver"
+  task_role_arn            = "${data.aws_iam_role.ecs_task_execution_role.arn}"
+  execution_role_arn       = "${data.aws_iam_role.ecs_task_execution_role.arn}"
+  network_mode             = "awsvpc"
+  requires_compatibilities = ["FARGATE"]
+  cpu                      = 256
+  memory                   = 512
+
+  container_definitions = jsonencode([
+    {
+      name      = "backend_webserver"
+      image     = "025429118793.dkr.ecr.us-east-1.amazonaws.com/movitbackend:latest"
+      essential = true
+      command   = []
+      portMappings = [
+        {
+          containerPort = 3000
+          hostPort      = 80
+        }
+      ]
+    }
+  ])
+}
+
+
 # create a security group
 #
 # this is used to allow network traffic to reach our containers
@@ -153,3 +181,25 @@ resource "aws_ecs_service" "taskMovIt_frontend_webserver_service" {
     container_port   = 80
   }
 }
+
+
+# define a service, running 5 instances of the backend webserver
+resource "aws_ecs_service" "taskMovIt_backend_webserver_service" {
+  name                   = "taskMovIt_backend_webserver_service"
+  enable_execute_command = true
+  launch_type            = "FARGATE"
+  cluster                = aws_ecs_cluster.taskMovIt_cluster.id
+  task_definition        = aws_ecs_task_definition.taskMovIt_backend_webserver.id
+  desired_count          = 1
+  network_configuration {
+    subnets          = aws_subnet.taskMovIt_subnet.*.id
+    security_groups  = [aws_security_group.taskMovIt_security_group.id]
+    assign_public_ip = true
+  }
+  load_balancer {
+    target_group_arn = aws_lb_target_group.taskMovIt_target_group.arn
+    container_name   = "backend_webserver"
+    container_port   = 80
+  }
+
+
