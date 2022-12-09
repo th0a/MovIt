@@ -11,7 +11,7 @@ app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
 */
-
+console.log("test");
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
@@ -23,30 +23,32 @@ app.use(bodyParser.json());
 const md5 = require('md5');
 const sqlite3 = require('sqlite3').verbose();
 
-let db = new sqlite3.Database('../backend/movies.db');
+let db = new sqlite3.Database('./movies.db');
 
-//db.run('create table movies(movie_id int not null,title varchar2(255),runtime varchar2(255),rating number,primary key (movie_id))');
+//delete movies.db every ewtime
+db.serialize(() => {
+db.run('create table movies(movie_id int not null,title varchar2(255),runtime varchar2(255),rating number,primary key (movie_id))');
 
-//db.run('create table watchList(user_id varchar2(20) not null,movie_id int,constraint mov_list primary key (user_id, movie_id),foreign key (movie_id) references movies(movie_id))');
-
-
-//db.run(`insert into movies (movie_id, title, runtime, rating) values (1, 'Batman', '2h 05m', 3);`);
-//db.run(`insert into movies (movie_id, title, runtime, rating) values (2, 'Pulp Fiction', '2h 45m', 5);`);
-//db.run(`insert into movies (movie_id, title, runtime, rating) values (3, 'Jaws', '2h 25m', 3);`);
-//db.run(`insert into movies (movie_id, title, runtime, rating) values (4, 'Back to the Future', '2h 15m', 4);`);
-//db.run(`insert into movies (movie_id, title, runtime, rating) values (5, 'Ghostbusters', '1h 55m', 4);`);
+db.run('create table watchList(user_id varchar2(20) not null,movie_id int,constraint mov_list primary key (user_id, movie_id),foreign key (movie_id) references movies(movie_id))');
 
 
-
-//db.run(`insert into watchList (user_id, movie_id) values ('atv8', 1);`);
-//db.run(`insert into watchList (user_id, movie_id) values ('atv8', 3);`);
-//db.run(`insert into watchList (user_id, movie_id) values ('atv8', 5);`);
-//db.run(`insert into watchList (user_id, movie_id) values ('mai46', 1);`);
-//db.run(`insert into watchList (user_id, movie_id) values ('mai46', 4);`);
-//db.run(`insert into watchList (user_id, movie_id) values ('tl55', 2);`);
-//db.run(`insert into watchList (user_id, movie_id) values ('tl55', 5);`);
+db.run(`insert into movies (movie_id, title, runtime, rating) values (1, 'Batman', '2h 05m', 3);`);
+db.run(`insert into movies (movie_id, title, runtime, rating) values (2, 'Pulp Fiction', '2h 45m', 5);`);
+db.run(`insert into movies (movie_id, title, runtime, rating) values (3, 'Jaws', '2h 25m', 3);`);
+db.run(`insert into movies (movie_id, title, runtime, rating) values (4, 'Back to the Future', '2h 15m', 4);`);
+db.run(`insert into movies (movie_id, title, runtime, rating) values (5, 'Ghostbusters', '1h 55m', 4);`);
 
 
+
+db.run(`insert into watchList (user_id, movie_id) values ('atv8', 1);`);
+db.run(`insert into watchList (user_id, movie_id) values ('atv8', 3);`);
+db.run(`insert into watchList (user_id, movie_id) values ('atv8', 5);`);
+db.run(`insert into watchList (user_id, movie_id) values ('mai46', 1);`);
+db.run(`insert into watchList (user_id, movie_id) values ('mai46', 4);`);
+db.run(`insert into watchList (user_id, movie_id) values ('tl55', 2);`);
+db.run(`insert into watchList (user_id, movie_id) values ('tl55', 5);`);
+
+})
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
@@ -95,11 +97,7 @@ app.get('/watchList/:user_id', (req, res) => {
     })
   });
 });
-
-
-//select * from movies where movies.movie_id = newArray
 //end of get watchlist for user
-
 
 
 //add movie to a user watchlist
