@@ -51,7 +51,7 @@ resource "aws_ecs_task_definition" "taskMovIt_frontend_webserver" {
   ])
 }
 
-
+#ADDED FOR BACKEND
 # define a task for the backend
 resource "aws_ecs_task_definition" "taskMovIt_backend_webserver" {
   family                   = "taskMovIt_backend_webserver"
@@ -138,6 +138,17 @@ resource "aws_lb" "taskMovIt_load_balancer" {
   subnets            = aws_subnet.taskMovIt_subnet.*.id
 }
 
+
+#ADDED FOR BACKEND
+# create a load balancer to distribute traffic to the tasks described below for BACKEND
+resource "aws_lb" "taskMovItBackend_load_balancer" {
+  name               = "taskMovItBackend-load-balancer"
+  internal           = false
+  load_balancer_type = "application"
+  security_groups    = [aws_security_group.taskMovIt_security_group.id]
+  subnets            = aws_subnet.taskMovIt_subnet.*.id
+}
+
 # create a target group for the load balancer described above
 resource "aws_lb_target_group" "taskMovIt_target_group" {
   name        = "taskMovIt-target-group"
@@ -150,6 +161,20 @@ resource "aws_lb_target_group" "taskMovIt_target_group" {
   ]
 }
 
+
+#ADDED FOR BACKEND
+# create a target group for the load balancer described above for BACKEND
+resource "aws_lb_target_group" "taskMovItBackend_target_group" {
+  name        = "taskMovItBackend-target-group"
+  port        = 80
+  protocol    = "HTTP"
+  vpc_id      = aws_default_vpc.default_vpc.id
+  target_type = "ip"
+  depends_on  = [
+    aws_lb.taskMovItBackend_load_balancer
+  ]
+}
+
 # load balancer endpoint
 resource "aws_lb_listener" "frontend" {
   load_balancer_arn = aws_lb.taskMovIt_load_balancer.arn
@@ -159,6 +184,20 @@ resource "aws_lb_listener" "frontend" {
   default_action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.taskMovIt_target_group.arn
+  }
+}
+
+
+#ADDED FOR BACKEND
+# load balancer endpoint for BACKEND
+resource "aws_lb_listener" "backend" {
+  load_balancer_arn = aws_lb.taskMovItBackend_load_balancer.arn
+  port              = "443"
+  protocol          = "HTTPS"
+  certificate_arn   = "arn:aws:acm:us-east-1:025429118793:certificate/31ce941b-19df-42ea-9175-8602940c9641"
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.taskMovItBackend_target_group.arn
   }
 }
 
@@ -182,7 +221,7 @@ resource "aws_ecs_service" "taskMovIt_frontend_webserver_service" {
   }
 }
 
-
+#ADDED FOR BACKEND
 # define a service, running 5 instances of the backend webserver
 resource "aws_ecs_service" "taskMovIt_backend_webserver_service" {
   name                   = "taskMovIt_backend_webserver_service"
@@ -197,7 +236,7 @@ resource "aws_ecs_service" "taskMovIt_backend_webserver_service" {
     assign_public_ip = true
   }
   load_balancer {
-    target_group_arn = aws_lb_target_group.taskMovIt_target_group.arn
+    target_group_arn = aws_lb_target_group.taskMovItBackend_target_group.arn
     container_name   = "backend_webserver"
     container_port   = 80
   }
