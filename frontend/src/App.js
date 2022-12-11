@@ -1,10 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NotFound from "./views/notfound";
-import Profile from "./views/profile";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useAuth0 } from "@auth0/auth0-react";
-import Header from "./components/header/header";
-import "./App.css";
+import LandingPage from "./components/LandingPage/LandingPage";
+import HomePage from "./components/HomePage/HomePage";
+import WatchlistPage from "./components/WatchlistPage/WatchlistPage";
 
 const App = () => {
   const { isAuthenticated } = useAuth0();
@@ -13,21 +13,20 @@ const App = () => {
     <div className="App">
       <BrowserRouter>
         <Routes>
+          <Route path="/" element={<LandingPage />} />
           <Route
-            path="/"
-            element={
-              <div>
-                <Header />
-              </div>
-            }
-          />
-          <Route path="/home" element={<Header />} />
-          <Route
-            path="/profile"
+            path="/home"
             element={
               <ProtectedRoute isLoggedIn={isAuthenticated}>
-                <Header />
-                <Profile />
+                <HomePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/watchlist"
+            element={
+              <ProtectedRoute isLoggedIn={isAuthenticated}>
+                <WatchlistPage />
               </ProtectedRoute>
             }
           />

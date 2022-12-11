@@ -1,13 +1,28 @@
 import { useAuth0 } from "@auth0/auth0-react";
+import { useEffect } from "react";
+import NavBar from "../components/NavBar/NavBar";
+import axios from "axios";
 
 const Profile = () => {
   const { user, isLoading } = useAuth0();
 
-  if (!isLoading) {
-    return <div>Logged in as {user.name}</div>;
-  } else {
-    return <div>Loading...</div>;
-  }
+  useEffect(() => {
+    if (!user) return;
+    axios.get(`http://localhost:5000/watchlist/${user.email}`).then((res) => {
+      console.log(res);
+    });
+  }, [user]);
+
+  return (
+    <div>
+      <NavBar />
+      {isLoading ? (
+        <span>Loading...</span>
+      ) : (
+        <div>Logged in as {user.picture}</div>
+      )}
+    </div>
+  );
 };
 
 export default Profile;

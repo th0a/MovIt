@@ -1,0 +1,23 @@
+body {
+  height: 100vh;
+  width: 100vw;
+  background-color: #eeeeee;
+  margin: 0;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+h1 {
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 3.8em;
+}
+
+p {
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 1em;
+}
+
+li {
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 0.9em;
+}
