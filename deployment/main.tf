@@ -70,7 +70,7 @@ resource "aws_ecs_task_definition" "taskMovIt_backend_webserver" {
       command   = []
       portMappings = [
         {
-          containerPort = 3000
+          containerPort = 80
           hostPort      = 80
         }
       ]
