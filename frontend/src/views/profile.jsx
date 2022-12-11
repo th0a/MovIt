@@ -8,7 +8,7 @@ const Profile = () => {
 
   useEffect(() => {
     if (!user) return;
-    axios.get(`http://localhost:5000/watchlist/${user.email}`).then((res) => {
+    axios.get(`http://backendmovit.duckdns.org/watchlist/${user.email}`).then((res) => {
       console.log(res);
     });
   }, [user]);
