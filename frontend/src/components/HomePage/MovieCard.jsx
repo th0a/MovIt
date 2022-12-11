@@ -14,7 +14,7 @@ function MovieCard(props) {
     setIsBookmarked(!isBookmarked);
     axios.request({
       method: "post",
-      url: `http://localhost:5000/watchlist/add/${user.email}`,
+      url: `http://backendmovit.duckdns.org/watchlist/add/${user.email}`,
       data: {
         imageURL: props.image.url,
         title: props.title.text,
@@ -26,7 +26,7 @@ function MovieCard(props) {
     setIsBookmarked(!isBookmarked);
     axios.request({
       method: "delete",
-      url: `http://localhost:5000/watchlist/delete/${user.email}/${props.title.text}`,
+      url: `http://backendmovit.duckdns.org/watchlist/delete/${user.email}/${props.title.text}`,
       data: {
         title: props.title.text,
       },
