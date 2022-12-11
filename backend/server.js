@@ -47,7 +47,7 @@ app.delete("/watchlist/delete/:userid/:title", (req, res) => {
   });
 });
 
-app.listen(5000, function () {
-  console.log("Listening on port 5000");
+app.listen(80, function () {
+  console.log("Listening on port 80");
 });
 // db.close();
