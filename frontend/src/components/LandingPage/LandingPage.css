@@ -1,0 +1,31 @@
+.container {
+  background-position: center;
+  background-size: 100%;
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  color: white;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 3.8em;
+  margin-bottom: 7px;
+  text-align: center;
+}
+
+.greeting {
+  color: rgba(255, 255, 255, 0.419);
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 1.5em;
+  width: 50%;
+  text-align: left;
+  margin: auto;
+}
+
+.text-group {
+  display: inline-block;
+}
