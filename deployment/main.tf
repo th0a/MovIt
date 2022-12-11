@@ -240,5 +240,5 @@ resource "aws_ecs_service" "taskMovIt_backend_webserver_service" {
     container_name   = "backend_webserver"
     container_port   = 80
   }
-
+}
 
