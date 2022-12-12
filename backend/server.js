@@ -45,6 +45,7 @@ app.delete("/watchlist/delete/:userid/:title", (req, res) => {
     if (err) throw err;
     else console.log("success");
   });
+  res.send("Deleted");
 });
 
 app.listen(80, function () {

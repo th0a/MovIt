@@ -21,7 +21,7 @@ function LandingPage() {
   };
 
   return (
-    <body
+    <div
       className="container"
       style={{
         backgroundImage: `url(${image})`,
@@ -42,7 +42,7 @@ function LandingPage() {
           Let's get started!
         </Button>
       </span>
-    </body>
+    </div>
   );
 }
 

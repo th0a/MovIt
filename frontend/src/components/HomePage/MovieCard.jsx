@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./MovieCard.css";
 import BookmarkAddOutlinedIcon from "@mui/icons-material/BookmarkAddOutlined";
 import BookmarkAddedOutlinedIcon from "@mui/icons-material/BookmarkAddedOutlined";
@@ -9,6 +9,20 @@ import axios from "axios";
 function MovieCard(props) {
   const { user } = useAuth0();
   const [isBookmarked, setIsBookmarked] = useState(false);
+
+  useEffect(
+    (props) => {
+      if (!user) return;
+      axios.get(`http://localhost:5000/watchlist/${user.email}`).then((res) => {
+        for (let i = 0; i < res.data.rows.length; i++) {
+          if (props.title.text === res.data.rows[i].title) {
+            setIsBookmarked(true);
+          }
+        }
+      });
+    },
+    [user]
+  );
 
   const handleAddBookmark = () => {
     setIsBookmarked(!isBookmarked);
@@ -53,16 +67,25 @@ function MovieCard(props) {
         />
       )}
       {props.image ? (
-        <img className="card-img" src={props.image.url} />
+        <img className="card-img" src={props.image.url} alt="card" />
       ) : (
         <div className="card-no-img">No Image</div>
       )}
-      <h3>{props.title.text}</h3>
-      <br />
-      <span>
-        <StarRoundedIcon style={{ color: "#FFD369" }} />
-        {props.rating + ".0"}
-      </span>
+      <div className="movie-card-info">
+        <h3 className="card-title-home">
+          {props.title.text +
+            " (20" +
+            Math.floor(Math.random() * 10 + 20) +
+            ")"}
+        </h3>
+        <span style={{ display: "flex", alignItems: "center" }}>
+          <StarRoundedIcon style={{ color: "#FFD369" }} />
+          {props.rating + ".0"}
+        </span>
+        <p style={{ marginTop: 0 }}>
+          Lamet consectetur adipiscing elit ut aliquam purus sit amet luctus.
+        </p>
+      </div>
     </div>
   );
 }
