@@ -1,0 +1,45 @@
+.card {
+  width: 150px;
+  display: block;
+}
+
+.movie-title {
+  color: rgba(0, 0, 0, 0.81);
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 23px;
+  margin: 0;
+}
+
+.inside-container-card {
+  border-radius: 8px;
+  background-color: white;
+  display: flex;
+  height: 250px;
+}
+
+.img-card {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  height: auto;
+  width: auto;
+  max-height: 250px;
+  min-width: 200px;
+  background-size: 100%;
+}
+
+.title-description {
+  width: 90%;
+  margin: 0;
+  line-height: 1.7;
+}
+
+.movie-info {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+  margin-top: 10px;
+}
+
+.release {
+  margin: 0;
+}

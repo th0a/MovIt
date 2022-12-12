@@ -5,34 +5,56 @@ import LogoutButton from "../LogoutButton";
 import { useAuth0 } from "@auth0/auth0-react";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import BookmarksRoundedIcon from "@mui/icons-material/BookmarksRounded";
-import WatchlistPage from "../WatchlistPage/WatchlistPage";
+import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 
 const NavBar = () => {
-  const { user } = useAuth0();
+  const { user, logout } = useAuth0();
+
+  const signout = () => {
+    logout({ returnTo: window.location.origin });
+  };
 
   return (
     <div className="navigation-bar">
-      <div className="left-container">
-        <img className="logo-img" src={Logo} alt="myLogo" />
-      </div>
+      <img className="logo-img" src={Logo} alt="myLogo" />
       <ul>
         <li>
-          <a href="/home">
+          <a
+            href="/home"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              flexDirection: "column",
+            }}
+          >
             <HomeRoundedIcon style={{ fontSize: 35 }} />
             Home
           </a>
         </li>
         <li>
-          <a href="/watchlist">
-            <BookmarksRoundedIcon style={{ fontSize: 30 }} />
+          <a
+            href="/watchlist"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              flexDirection: "column",
+              position: "relative",
+              top: "3px",
+            }}
+          >
+            <BookmarksRoundedIcon style={{ fontSize: 30, lineHeight: "1" }} />
             Watchlist
           </a>
         </li>
         <li>
-          <div className="btn-group">
-            <img src={user ? user.picture : null} className="user-img" />
-            <LogoutButton />
-          </div>
+          <img src={user ? user.picture : null} className="user-img" />
+        </li>
+        <li>
+          <LogoutRoundedIcon
+            className="scale-icons"
+            onClick={signout}
+            style={{ color: "white" }}
+          />
         </li>
       </ul>
     </div>

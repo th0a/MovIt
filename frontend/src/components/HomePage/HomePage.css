@@ -34,7 +34,7 @@
   height: 100%;
   width: 100%;
   border: none;
-  padding: 0 auto;
+  padding-left: 8px;
   outline: none;
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
@@ -42,3 +42,4 @@
 .search-input:active {
   border: none;
 }
+

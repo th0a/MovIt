@@ -40,6 +40,21 @@
   color: white;
 }
 .bookmark-add:hover {
+  cursor: pointer;
   opacity: 1;
   transform: scale(1.03);
+}
+
+.card-title-home {
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 18px;
+  margin: 0;
+}
+
+
+.movie-card-info {
+  margin-left: 14px;
+  margin-top: 5px;
+  display: flex;
+  flex-direction: column;
 }
