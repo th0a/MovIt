@@ -12,7 +12,7 @@ function WatchlistCard(props) {
     axios
       .request({
         method: "delete",
-        url: `http://localhost:5000/watchlist/delete/${user.email}/${props.titleOfMovie}`,
+        url: `https://backendmovit.duckdns.org/watchlist/delete/${user.email}/${props.titleOfMovie}`,
         data: {
           title: props.titleOfMovie,
         },
