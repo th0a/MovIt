@@ -11,7 +11,7 @@ function MovieCard(props) {
   const [isBookmarked, setIsBookmarked] = useState(false);
 
   useEffect(
-    (props) => {
+    () => {
       if (!user) return;
       axios.get(`https://backendmovit.duckdns.org/watchlist/${user.email}`).then((res) => {
         for (let i = 0; i < res.data.rows.length; i++) {
