@@ -13,7 +13,7 @@ function MovieCard(props) {
   useEffect(
     (props) => {
       if (!user) return;
-      axios.get(`http://localhost:5000/watchlist/${user.email}`).then((res) => {
+      axios.get(`https://backendmovit.duckdns.org/watchlist/${user.email}`).then((res) => {
         for (let i = 0; i < res.data.rows.length; i++) {
           if (props.title.text === res.data.rows[i].title) {
             setIsBookmarked(true);
