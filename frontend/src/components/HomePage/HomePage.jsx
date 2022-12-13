@@ -19,24 +19,6 @@ function HomePage() {
 
   // hook to re-execute setMovieCards() when movieData received from API changes
   useEffect(() => {
-    //function that maps each movie object's data to a component (movie card) with specific properties we wanted (key, image, title, etc) and then puts them all in movieList
-    const setMovieCards = () => {
-      if (!movieData || movieData.length === 0) return [];
-      let list = movieData.results.map((movie) => {
-        if (!movie.primaryImage) return null;
-        return (
-          <MovieCard
-            key={movie.id}
-            image={movie.primaryImage}
-            title={movie.titleText}
-            releaseDate={movie.releaseDate}
-            rating={Math.floor(Math.random() * 5 + 1)}
-          />
-        );
-      });
-
-      setMovieList(list);
-    };
     setMovieCards();
   }, [movieData]);
 
@@ -85,6 +67,25 @@ function HomePage() {
       setIsloading(false);
     });
   };
+  
+      //function that maps each movie object's data to a component (movie card) with specific properties we wanted (key, image, title, etc) and then puts them all in movieList
+    const setMovieCards = () => {
+      if (!movieData || movieData.length === 0) return [];
+      let list = movieData.results.map((movie) => {
+        if (!movie.primaryImage) return null;
+        return (
+          <MovieCard
+            key={movie.id}
+            image={movie.primaryImage}
+            title={movie.titleText}
+            releaseDate={movie.releaseDate}
+            rating={Math.floor(Math.random() * 5 + 1)}
+          />
+        );
+      });
+
+      setMovieList(list);
+    };
 
   // renders the components of the HomePage to display to user
   return (
